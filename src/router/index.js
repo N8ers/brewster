@@ -2,19 +2,25 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../components/Home.vue";
 import Find from "../components/Find.vue";
+import BreweryDetails from "../components/BreweryDetails.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: Home
   },
   {
     path: "/find",
-    name: "Find",
+    name: "find",
     component: Find
+  },
+  {
+    path: "/brewery/:breweryid",
+    name: "brewerydetails",
+    component: BreweryDetails
   }
 ];
 
