@@ -11,40 +11,25 @@
         @click.prevent="sandiegoBreweries"
         color="#f6d465"
         class="white--text"
-        >San Diego</v-btn
-      >
-      <v-btn
-        type="submit"
-        @click.prevent="indyBreweries"
-        color="#f6d465"
-        class="white--text"
-        >Indy</v-btn
-      >
-      <v-btn
-        type="submit"
-        @click.prevent="findBreweries"
-        color="#f6d465"
-        class="white--text"
-        >find</v-btn
-      >
+      >San Diego</v-btn>
+      <v-btn type="submit" @click.prevent="indyBreweries" color="#f6d465" class="white--text">Indy</v-btn>
+      <v-btn type="submit" @click.prevent="findBreweries" color="#f6d465" class="white--text">find</v-btn>
       <!-- we could also add a search by brewery name... -->
       <!-- https://www.openbrewerydb.org/documentation/04-autocomplete  -->
       <br />
       <p v-if="this.apiError" class="error-message">
         yooo... there was an api error, did you type in a real city???
-        <br />
-        this would be a good candidate for a mixin!
+        <br />this would be a good candidate for a mixin!
       </p>
       <p v-if="this.noResults" class="error-message">
         yooo... doesn't look like there are any breweries here...
-        <br />
-        this would be a good candidate for a mixin!
+        <br />this would be a good candidate for a mixin!
       </p>
     </form>
     <br />
     <div v-if="findTriggred" class="results">
       <h4>BREWERIES</h4>
-      <v-simple-table fixed-header height="300px">
+      <v-simple-table fixed-header height="40vh">
         <thead>
           <tr>
             <th class="text-left">Brewery</th>
@@ -67,13 +52,15 @@
             </td>
             <td class="text-left">{{ brewery.state }}</td>
             <td class="text-left">
-              {{
+              <a :href="brewery.website_url" target="_blank">
+                {{
                 brewery.website_url
-                  ? brewery.website_url
-                  : "no website available"
-              }}
-              <!-- also, maybe a method/computed to remove the 'http://www.' to save on space -->
-              <!-- : we should use a method/computed website_url or something to make this an anchor tag -->
+                ? formatURL(brewery.website_url)
+                : "no website available"
+                }}
+                <!-- also, maybe a method/computed to remove the 'http://www.' to save on space -->
+                <!-- : we should use a method/computed website_url or something to make this an anchor tag -->
+              </a>
             </td>
           </tr>
         </tbody>
@@ -94,6 +81,7 @@ export default {
       noResults: false
     };
   },
+  // should i be using a computed property for this?
   methods: {
     findBreweries: function() {
       let city = this.city;
@@ -116,6 +104,19 @@ export default {
         this.noResults = true;
         this.findTriggred = false;
       }
+    },
+    formatURL: function(url) {
+      // console.log(url);
+      let shortURL = "";
+
+      if (url.substr(0, 5) == "http:") {
+        shortURL = url.substr(11);
+      } else if (url.substr(0, 5) == "https") {
+        shortURL = url.substr(12);
+      } else {
+        return url;
+      }
+      return shortURL;
     },
     goToBrewery: function(id) {
       this.$router.push({ name: "brewerydetails", params: { breweryid: id } });
