@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../components/Home.vue";
 import Find from "../components/Find.vue";
 import BreweryDetails from "../components/BreweryDetails.vue";
+import Auth from "../components/Auth.vue";
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,11 @@ const routes = [
     path: "/find",
     name: "find",
     component: Find
+  },
+  {
+    path: "/auth",
+    name: "auth",
+    component: Auth
   },
   {
     path: "/brewery/:breweryid",

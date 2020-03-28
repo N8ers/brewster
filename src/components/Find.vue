@@ -27,6 +27,9 @@
       </p>
     </form>
     <br />
+    <div class="text-center">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </div>
     <div v-if="findTriggred" class="results">
       <h4>BREWERIES</h4>
       <v-simple-table fixed-header height="40vh">
