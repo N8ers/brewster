@@ -8,8 +8,8 @@
     </router-link>
 
     <v-spacer></v-spacer>
-    <v-btn :to="{ name: 'auth' }" color="#f6d465" class="white--text">log in</v-btn>
-    <v-btn :to="{ name: 'find' }" color="#f6d465" class="white--text">find</v-btn>
+    <v-btn :to="{ name: 'auth' }" color="#f6d465" class="white--text ma-2">log in</v-btn>
+    <v-btn :to="{ name: 'find' }" color="#f6d465" class="white--text" ma-2>find</v-btn>
   </v-app-bar>
 </template>
 

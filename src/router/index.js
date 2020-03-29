@@ -4,6 +4,7 @@ import Home from "../components/Home.vue";
 import Find from "../components/Find.vue";
 import BreweryDetails from "../components/BreweryDetails.vue";
 import Auth from "../components/Auth.vue";
+import CreateAccount from "../components/CreateAccount.vue";
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,11 @@ const routes = [
     path: "/auth",
     name: "auth",
     component: Auth
+  },
+  {
+    path: "/createAccount",
+    name: "createAccount",
+    component: CreateAccount
   },
   {
     path: "/brewery/:breweryid",

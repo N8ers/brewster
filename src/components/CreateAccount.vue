@@ -1,14 +1,15 @@
 <template>
   <div>
     <form>
+      <v-text-field required label="username"></v-text-field>
       <v-text-field required label="email"></v-text-field>
       <v-text-field required label="password" type="password"></v-text-field>
-      <v-btn type="submit" color="#f6d465" class="white--text">Log in</v-btn>
+      <v-btn type="submit" color="#f6d465" class="white--text">Sign Up!</v-btn>
       <br />
       <br />
       <br />
-      <p>wanna join in the fun?</p>
-      <v-btn @click="createAccount">Sign up</v-btn>
+      <p>already have an account?</p>
+      <v-btn @click="loginPage">Login in</v-btn>
     </form>
   </div>
 </template>
@@ -16,8 +17,8 @@
 <script>
 export default {
   methods: {
-    createAccount: function() {
-      this.$router.push({ name: "createAccount" });
+    loginPage: function() {
+      this.$router.push({ name: "auth" });
     }
   }
 };
