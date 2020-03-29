@@ -7,7 +7,15 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     breweries: [],
-    isLoading: false
+    isLoading: false,
+    noResults: false,
+    suggestedCities: [
+      "san diego",
+      "kalamazoo",
+      "indianapolis",
+      "boulder",
+      "seattle"
+    ]
   },
   mutations: {
     SET_BREWERIES_BY_CITY(state, breweries) {
@@ -15,17 +23,25 @@ export default new Vuex.Store({
     },
     IS_LOADING(state, setTo) {
       state.isLoading = setTo;
+    },
+    SET_NO_RESULTS(state, setTo) {
+      state.noResults = setTo;
     }
   },
   actions: {
     getBreweriesByCity({ commit }, city) {
+      commit("SET_NO_RESULTS", false);
       commit("IS_LOADING", true);
       commit("SET_BREWERIES_BY_CITY", []);
       setTimeout(function() {
         return EventServices.getBreweriesByCity(city)
           .then(response => {
             commit("SET_BREWERIES_BY_CITY", response.data);
+            console.log(response);
             commit("IS_LOADING", false);
+            if (response.data.length < 1) {
+              commit("SET_NO_RESULTS", true);
+            }
           })
           .catch(error => {
             console.log("error loading breweries: ", error);

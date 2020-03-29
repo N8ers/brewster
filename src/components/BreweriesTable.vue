@@ -2,6 +2,10 @@
   <div class="results">
     <div v-if="breweries.length <= 0">
       <p>type in a city above to find local brews!</p>
+      <p
+        v-if="noResults"
+        class="error-message"
+      >yooo... doesn't look like there are any breweries here...</p>
     </div>
     <v-progress-circular v-if="isLoading" indeterminate color="primary"></v-progress-circular>
     <div v-if="breweries.length > 0">
@@ -48,6 +52,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   props: {
     breweries: Array,
@@ -70,8 +75,15 @@ export default {
       }
       return shortURL;
     }
+  },
+  computed: {
+    ...mapState(["noResults"])
   }
 };
 </script>
 
-<style></style>
+<style>
+.error-message {
+  color: red;
+}
+</style>
