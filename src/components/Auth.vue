@@ -6,6 +6,9 @@
       <v-btn type="submit" color="#f6d465" class="white--text">Log in</v-btn>
       <br />
       <br />
+      <v-btn @click="login" type="submit" color="red" class="white--text">fake 'Log in'</v-btn>
+      <br />
+      <br />
       <br />
       <p>wanna join in the fun?</p>
       <v-btn @click="createAccount">Sign up</v-btn>
@@ -18,6 +21,11 @@ export default {
   methods: {
     createAccount: function() {
       this.$router.push({ name: "createAccount" });
+    },
+    login: function() {
+      this.$store.dispatch("login").then(() => {
+        this.$router.push({ name: "home" });
+      });
     }
   }
 };

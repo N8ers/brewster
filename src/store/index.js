@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    loggedIn: false,
     breweries: [],
     isLoading: false,
     noResults: false,
@@ -14,8 +15,8 @@ export default new Vuex.Store({
       "kalamazoo",
       "indianapolis",
       "boulder",
-      "seattle"
-    ]
+      "seattle",
+    ],
   },
   mutations: {
     SET_BREWERIES_BY_CITY(state, breweries) {
@@ -26,7 +27,13 @@ export default new Vuex.Store({
     },
     SET_NO_RESULTS(state, setTo) {
       state.noResults = setTo;
-    }
+    },
+    LOG_IN(state) {
+      state.loggedIn = true;
+    },
+    LOG_OUT(state) {
+      state.loggedIn = false;
+    },
   },
   actions: {
     getBreweriesByCity({ commit }, city) {
@@ -35,7 +42,7 @@ export default new Vuex.Store({
       commit("SET_BREWERIES_BY_CITY", []);
       setTimeout(function() {
         return EventServices.getBreweriesByCity(city)
-          .then(response => {
+          .then((response) => {
             commit("SET_BREWERIES_BY_CITY", response.data);
             console.log(response);
             commit("IS_LOADING", false);
@@ -43,12 +50,18 @@ export default new Vuex.Store({
               commit("SET_NO_RESULTS", true);
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.log("error loading breweries: ", error);
             commit("IS_LOADING", false);
           });
       }, 1000);
-    }
+    },
+    logout({ commit }) {
+      commit("LOG_OUT");
+    },
+    login({ commit }) {
+      commit("LOG_IN");
+    },
   },
-  modules: {}
+  modules: {},
 });

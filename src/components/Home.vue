@@ -6,6 +6,12 @@
       using the latest in fermenting algorithms and map analytics Beerski can
       help you find a brewery jus down the road. Buy local. Drink local.
     </h4>
+    <br />
+    <hr />
+    <br />
+    <h4>Background Color: #f6d465</h4>
+    <h4>To login, navigate to 'LOG IN' button and click "FAKE 'LOG IN'" button</h4>
+    <h5>there is a login sanity checker at the center of the nav bar</h5>
   </div>
 </template>
 
