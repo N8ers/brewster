@@ -1,12 +1,32 @@
 <template>
   <div>
     <form>
-      <v-text-field required label="email"></v-text-field>
-      <v-text-field required label="password" type="password"></v-text-field>
-      <v-btn type="submit" color="#f6d465" class="white--text">Log in</v-btn>
+      <v-text-field v-model="user.email" required label="email">{{
+        user.email
+      }}</v-text-field>
+      <v-text-field
+        v-model="user.password"
+        required
+        label="password"
+        type="password"
+        >{{ user.password }}</v-text-field
+      >
+      <v-btn
+        @click.prevent="login"
+        type="submit"
+        color="#f6d465"
+        class="white--text"
+        >Log in</v-btn
+      >
       <br />
       <br />
-      <v-btn @click="login" type="submit" color="red" class="white--text">fake 'Log in'</v-btn>
+      <v-btn
+        @click.prevent="login"
+        type="submit"
+        color="red"
+        class="white--text"
+        >fake 'Log in'</v-btn
+      >
       <br />
       <br />
       <br />
@@ -18,16 +38,27 @@
 
 <script>
 export default {
+  data() {
+    return {
+      user: {
+        email: "",
+        password: "",
+      },
+    };
+  },
   methods: {
     createAccount: function() {
       this.$router.push({ name: "createAccount" });
     },
+    fakeLogin: function() {
+      this.$store.dispatch("fakeLogin");
+    },
     login: function() {
-      this.$store.dispatch("login").then(() => {
+      this.$store.dispatch("login", this.user).then(() => {
         this.$router.push({ name: "home" });
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,11 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import * as firebase from "firebase/app";
+import "firebase/auth";
 import EventServices from "../services/EventServices";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    user: {},
     loggedIn: false,
     breweries: [],
     isLoading: false,
@@ -28,11 +31,16 @@ export default new Vuex.Store({
     SET_NO_RESULTS(state, setTo) {
       state.noResults = setTo;
     },
-    LOG_IN(state) {
+    LOG_IN(state, data) {
       state.loggedIn = true;
+      state.user.email = data.user.email;
     },
     LOG_OUT(state) {
       state.loggedIn = false;
+      state.user = {};
+    },
+    DEAD_COMMIT() {
+      console.log("DEAD_COMMIT hit");
     },
   },
   actions: {
@@ -59,8 +67,40 @@ export default new Vuex.Store({
     logout({ commit }) {
       commit("LOG_OUT");
     },
-    login({ commit }) {
+    fakeLogin({ commit }) {
       commit("LOG_IN");
+    },
+    signup({ commit }, user) {
+      console.log("newUser: ", user);
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(user.email, user.password)
+        .then(() => {
+          console.log("SIGNED UP!");
+        })
+        .catch(function(error) {
+          console.log("error!", error);
+        });
+      commit("DEAD_COMMIT");
+    },
+    login({ commit }, user) {
+      console.log("user", user);
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(user.email, user.password)
+        // .onAuthStateChange(function(user) {
+        //   if (user) {
+        //     console.log(user);
+        //   }
+        // })
+        .then((data) => {
+          console.log("success!");
+          console.log(data);
+          commit("LOG_IN", data);
+        })
+        .catch(function(error) {
+          console.log("error: ", error);
+        });
     },
   },
   modules: {},
