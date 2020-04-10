@@ -31,9 +31,11 @@ export default new Vuex.Store({
     SET_NO_RESULTS(state, setTo) {
       state.noResults = setTo;
     },
-    LOG_IN(state, data) {
+    SET_USER(state, user) {
       state.loggedIn = true;
-      state.user.email = data.user.email;
+      state.user.email = user.email;
+      state.user.username = user.displayName;
+      state.user.uid = user.uid;
     },
     LOG_OUT(state) {
       state.loggedIn = false;
@@ -65,42 +67,53 @@ export default new Vuex.Store({
       }, 1000);
     },
     logout({ commit }) {
+      firebase
+        .auth()
+        .signOut()
+        .catch((error) => console.log("error: ", error));
       commit("LOG_OUT");
     },
     fakeLogin({ commit }) {
       commit("LOG_IN");
     },
-    signup({ commit }, user) {
-      console.log("newUser: ", user);
-      firebase
+    async signup({ commit }, user) {
+      await firebase
         .auth()
-        .createUserWithEmailAndPassword(user.email, user.password)
-        .then(() => {
-          console.log("SIGNED UP!");
-        })
-        .catch(function(error) {
-          console.log("error!", error);
-        });
+        .createUserWithEmailAndPassword(user.email, user.password);
+
+      await firebase
+        .auth()
+        .currentUser.updateProfile({ displayName: user.name });
+
       commit("DEAD_COMMIT");
     },
-    login({ commit }, user) {
+    async login({ dispatch }, user) {
       console.log("user", user);
       firebase
         .auth()
-        .signInWithEmailAndPassword(user.email, user.password)
-        // .onAuthStateChange(function(user) {
-        //   if (user) {
-        //     console.log(user);
-        //   }
-        // })
-        .then((data) => {
-          console.log("success!");
-          console.log(data);
-          commit("LOG_IN", data);
+        .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .then(() => {
+          return firebase
+            .auth()
+            .signInWithEmailAndPassword(user.email, user.password)
+            .then(() => {
+              console.log("all of the auth worked?");
+              dispatch("fetchCurrentUser");
+            });
         })
-        .catch(function(error) {
-          console.log("error: ", error);
+        .catch((error) => {
+          console.log(error.code);
+          console.log(error.message);
         });
+    },
+    async fetchCurrentUser({ commit }) {
+      await firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          commit("SET_USER", user);
+        } else {
+          console.log("no dice, signed out");
+        }
+      });
     },
   },
   modules: {},

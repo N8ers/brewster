@@ -1,5 +1,10 @@
 <template>
   <div class="home-container">
+    <div v-if="loggedIn">
+      <h2>Welcome back, {{ user.username }}</h2>
+      <br />
+      <hr />
+    </div>
     <h2>Find local breweries in your local area</h2>
     <br />
     <h4>
@@ -16,9 +21,20 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   name: "Home",
-  props: {}
+  props: {},
+  computed: {
+    ...mapState(["loggedIn", "user"])
+  },
+  methods: {
+    ...mapActions(["fetchCurrentUser"])
+  },
+  created() {
+    console.log("created");
+    this.fetchCurrentUser();
+  }
 };
 </script>
 

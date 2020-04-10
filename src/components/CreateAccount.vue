@@ -1,24 +1,15 @@
 <template>
   <div>
     <form>
-      <!-- <v-text-field required label="username">{{}}</v-text-field> -->
-      <v-text-field v-model="user.email" required label="email">{{
-        user.email
-      }}</v-text-field>
+      <v-text-field v-model="user.name" required label="username">{{ user.name }}</v-text-field>
+      <v-text-field v-model="user.email" required label="email">{{ user.email }}</v-text-field>
       <v-text-field
         v-model="user.password"
         required
         label="password"
         type="password"
-        >{{ user.password }}</v-text-field
-      >
-      <v-btn
-        @click.prevent="signup"
-        type="submit"
-        color="#f6d465"
-        class="white--text"
-        >Sign Up!</v-btn
-      >
+      >{{ user.password }}</v-text-field>
+      <v-btn @click.prevent="signup" type="submit" color="#f6d465" class="white--text">Sign Up!</v-btn>
       <br />
       <br />
       <br />
@@ -31,7 +22,7 @@
 <script>
 export default {
   data() {
-    return { user: { email: "", password: "" } };
+    return { user: { name: "", email: "", password: "" } };
   },
   methods: {
     loginPage: function() {
@@ -43,8 +34,8 @@ export default {
       // .then(() => {
       //    this.$router.push({ name: "home" });
       // });
-    },
-  },
+    }
+  }
 };
 </script>
 

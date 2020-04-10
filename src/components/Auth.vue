@@ -1,33 +1,22 @@
 <template>
   <div>
     <form>
-      <v-text-field v-model="user.email" required label="email">{{
-        user.email
-      }}</v-text-field>
+      <v-text-field v-model="user.email" required label="email">{{ user.email }}</v-text-field>
       <v-text-field
         v-model="user.password"
         required
         label="password"
         type="password"
-        >{{ user.password }}</v-text-field
-      >
-      <v-btn
-        @click.prevent="login"
-        type="submit"
-        color="#f6d465"
-        class="white--text"
-        >Log in</v-btn
-      >
+      >{{ user.password }}</v-text-field>
+      <v-btn @click.prevent="login" type="submit" color="#f6d465" class="white--text">Log in</v-btn>
       <br />
       <br />
       <v-btn
-        @click.prevent="login"
+        @click.prevent="getCurrentUser"
         type="submit"
-        color="red"
+        color="blue"
         class="white--text"
-        >fake 'Log in'</v-btn
-      >
-      <br />
+      >current user</v-btn>
       <br />
       <br />
       <p>wanna join in the fun?</p>
@@ -42,8 +31,8 @@ export default {
     return {
       user: {
         email: "",
-        password: "",
-      },
+        password: ""
+      }
     };
   },
   methods: {
@@ -58,7 +47,10 @@ export default {
         this.$router.push({ name: "home" });
       });
     },
-  },
+    getCurrentUser() {
+      this.$store.dispatch("fetchCurrentUser");
+    }
+  }
 };
 </script>
 

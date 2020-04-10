@@ -8,34 +8,16 @@
     </router-link>
 
     <v-spacer></v-spacer>
-    <p v-if="user.email">Welcome: {{ user.email }}</p>
-    <p v-else>LoggedIn: {{ loggedIn }}</p>
-    <v-spacer></v-spacer>
 
-    <v-btn :to="{ name: 'find' }" color="#f6d465" class="white--text ma-2"
-      >find</v-btn
-    >
+    <v-btn :to="{ name: 'find' }" color="#f6d465" class="white--text ma-2">find</v-btn>
     <v-btn
       v-if="loggedIn"
       :to="{ name: 'favorites' }"
       color="#f6d465"
       class="white--text ma-2"
-      >favorites</v-btn
-    >
-    <v-btn
-      v-if="!loggedIn"
-      :to="{ name: 'auth' }"
-      color="#f6d465"
-      class="white--text ma-2"
-      >log in</v-btn
-    >
-    <v-btn
-      v-if="loggedIn"
-      @click="logout"
-      color="#f6d465"
-      class="white--text ma-2"
-      >log out</v-btn
-    >
+    >favorites</v-btn>
+    <v-btn v-if="!loggedIn" :to="{ name: 'auth' }" color="#f6d465" class="white--text ma-2">log in</v-btn>
+    <v-btn v-if="loggedIn" @click="logout" color="#f6d465" class="white--text ma-2">log out</v-btn>
   </v-app-bar>
 </template>
 
@@ -47,11 +29,11 @@ export default {
       this.$store.dispatch("logout").then(() => {
         this.$router.push({ name: "home" });
       });
-    },
+    }
   },
   computed: {
-    ...mapState(["loggedIn", "user"]),
-  },
+    ...mapState(["loggedIn", "user"])
+  }
 };
 </script>
 
