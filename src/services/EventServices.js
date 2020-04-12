@@ -10,8 +10,9 @@ const apiClient = axios.create({
   timeout: 10000
 });
 
-export function fetchBreweriesByCity(city) {
-  return apiClient.get(`?by_city=${city}`);
+export async function fetchBreweriesByCity(city) {
+  let breweries = await apiClient.get(`?by_city=${city}`);
+  return breweries.data;
 }
 
 export async function fetchBreweriesById(ids) {

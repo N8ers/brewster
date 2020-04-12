@@ -27,7 +27,11 @@
       </div>
     </form>
     <br />
-    <BreweriesTable :breweries="breweries_db.citiesBreweries" :isLoading="isLoading" />
+    <BreweriesTable
+      v-if="showTable"
+      :breweries="breweries_db.citiesBreweries"
+      :isLoading="isLoading"
+    />
   </div>
 </template>
 
@@ -41,12 +45,14 @@ export default {
   },
   data() {
     return {
-      city: ""
+      city: "",
+      showTable: false
     };
   },
   methods: {
-    ...mapActions(["getBreweriesByCity"]),
+    ...mapActions("breweries_db", ["getBreweriesByCity"]),
     findBreweries: function(city = this.city) {
+      this.showTable = true;
       this.getBreweriesByCity(city);
     }
   },

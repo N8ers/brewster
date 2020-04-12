@@ -3,17 +3,16 @@ import Vuex from "vuex";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firebase-firestore";
-// import {
-//   fetchBreweriesByCity,
-//   fetchBreweriesById
-// } from "../services/EventServices";
+
 import breweries_db from "./modules/breweries";
+import firebase_db from "./modules/firebase_db";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    breweries_db
+    breweries_db,
+    firebase_db
   },
   state: {
     user: {
@@ -92,7 +91,7 @@ export default new Vuex.Store({
     //   let favoriteBreweries = await fetchBreweriesById(breweryIds);
     //   commit("SET_FAVORITE_BREWERIES", favoriteBreweries);
     // },
-    logout({ commit }) {
+    async logout({ commit }) {
       firebase
         .auth()
         .signOut()
@@ -110,7 +109,7 @@ export default new Vuex.Store({
 
       commit("DEAD_COMMIT");
     },
-    login({ dispatch }, user) {
+    async login({ dispatch }, user) {
       firebase
         .auth()
         .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
