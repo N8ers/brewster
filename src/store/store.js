@@ -7,13 +7,13 @@ import "firebase/firebase-firestore";
 //   fetchBreweriesByCity,
 //   fetchBreweriesById
 // } from "../services/EventServices";
-import breweries from "./modules/breweries";
+import breweries_db from "./modules/breweries";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    breweries
+    breweries_db
   },
   state: {
     user: {
@@ -22,8 +22,8 @@ export default new Vuex.Store({
       uid: ""
     },
     loggedIn: false,
-    breweries: [],
-    citiesBreweries: [],
+    // breweries: [],
+    // citiesBreweries: [],
     favoriteBreweryIds: [],
     favoriteBreweries: [],
     isLoading: false,

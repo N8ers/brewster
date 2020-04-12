@@ -57,7 +57,6 @@
 import { mapState } from "vuex";
 export default {
   props: {
-    // breweries: Object,
     breweries: Array,
     isLoading: Boolean
   },

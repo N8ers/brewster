@@ -11,7 +11,7 @@ const mutations = {
     console.log("SET_BREWERIES_BY_CITY fired");
     console.log("SET_BREWERIES_BY_CITY state : ", state.citiesBreweries);
     console.log("state.breweries before: ", state.breweries);
-    state.citiesBreweries = [...breweries];
+    state.citiesBreweries = breweries;
     console.log("state.breweries after: ", state.breweries);
     console.log("SET_BREWERIES_BY_CITY state : ", state.citiesBreweries);
   },
@@ -46,7 +46,7 @@ const actions = {
       return fetchBreweriesByCity(city)
         .then(response => {
           commit("SET_BREWERIES_BY_CITY", response.data);
-          console.log(response.data);
+          console.log("getBreweriesByCity: ", response.data);
           commit("IS_LOADING", false);
           // if (response.data.length < 1) {
           //   commit("SET_NO_RESULTS", true);
