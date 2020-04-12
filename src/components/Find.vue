@@ -27,7 +27,7 @@
       </div>
     </form>
     <br />
-    <BreweriesTable :breweries="breweries" :isLoading="isLoading" />
+    <BreweriesTable :breweries="breweries.citiesBreweries" :isLoading="isLoading" />
   </div>
 </template>
 
@@ -51,7 +51,12 @@ export default {
     }
   },
   computed: {
-    ...mapState(["breweries", "isLoading", "suggestedCities"])
+    ...mapState([
+      "breweries",
+      "isLoading",
+      "suggestedCities",
+      "citiesBreweries"
+    ])
   }
 };
 </script>
