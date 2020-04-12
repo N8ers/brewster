@@ -51,6 +51,8 @@
   </div>
 </template>
 
+// gonna need a way to passin a prop, to show a trash can item or not
+
 <script>
 import { mapState } from "vuex";
 export default {
@@ -85,5 +87,9 @@ export default {
 <style>
 .error-message {
   color: red;
+}
+.results {
+  margin: 0 auto;
+  width: 50%;
 }
 </style>

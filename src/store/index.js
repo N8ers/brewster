@@ -2,15 +2,25 @@ import Vue from "vue";
 import Vuex from "vuex";
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import EventServices from "../services/EventServices";
+import "firebase/firebase-firestore";
+import {
+  fetchBreweriesByCity,
+  fetchBreweriesById
+} from "../services/EventServices";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: {},
+    user: {
+      email: "",
+      username: "",
+      uid: ""
+    },
     loggedIn: false,
     breweries: [],
+    favoriteBreweryIds: [],
+    favoriteBreweries: [],
     isLoading: false,
     noResults: false,
     suggestedCities: [
@@ -18,8 +28,8 @@ export default new Vuex.Store({
       "kalamazoo",
       "indianapolis",
       "boulder",
-      "seattle",
-    ],
+      "seattle"
+    ]
   },
   mutations: {
     SET_BREWERIES_BY_CITY(state, breweries) {
@@ -30,6 +40,9 @@ export default new Vuex.Store({
     },
     SET_NO_RESULTS(state, setTo) {
       state.noResults = setTo;
+    },
+    SET_FAVORITE_BREWERIES(state, breweries) {
+      state.favoriteBreweries = breweries;
     },
     SET_USER(state, user) {
       state.loggedIn = true;
@@ -42,8 +55,8 @@ export default new Vuex.Store({
       state.user = {};
     },
     DEAD_COMMIT() {
-      console.log("DEAD_COMMIT hit");
-    },
+      // console.log("DEAD_COMMIT hit");
+    }
   },
   actions: {
     getBreweriesByCity({ commit }, city) {
@@ -51,8 +64,8 @@ export default new Vuex.Store({
       commit("IS_LOADING", true);
       commit("SET_BREWERIES_BY_CITY", []);
       setTimeout(function() {
-        return EventServices.getBreweriesByCity(city)
-          .then((response) => {
+        return fetchBreweriesByCity(city)
+          .then(response => {
             commit("SET_BREWERIES_BY_CITY", response.data);
             console.log(response);
             commit("IS_LOADING", false);
@@ -60,21 +73,22 @@ export default new Vuex.Store({
               commit("SET_NO_RESULTS", true);
             }
           })
-          .catch((error) => {
+          .catch(error => {
             console.log("error loading breweries: ", error);
             commit("IS_LOADING", false);
           });
       }, 1000);
     },
+    async getBreweriesById({ commit }, breweryIds) {
+      let favoriteBreweries = await fetchBreweriesById(breweryIds);
+      commit("SET_FAVORITE_BREWERIES", favoriteBreweries);
+    },
     logout({ commit }) {
       firebase
         .auth()
         .signOut()
-        .catch((error) => console.log("error: ", error));
+        .catch(error => console.log("error: ", error));
       commit("LOG_OUT");
-    },
-    fakeLogin({ commit }) {
-      commit("LOG_IN");
     },
     async signup({ commit }, user) {
       await firebase
@@ -87,34 +101,42 @@ export default new Vuex.Store({
 
       commit("DEAD_COMMIT");
     },
-    async login({ dispatch }, user) {
-      console.log("user", user);
+    login({ dispatch }, user) {
       firebase
         .auth()
         .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(() => {
           return firebase
             .auth()
-            .signInWithEmailAndPassword(user.email, user.password)
-            .then(() => {
-              console.log("all of the auth worked?");
-              dispatch("fetchCurrentUser");
-            });
+            .signInWithEmailAndPassword(user.email, user.password);
         })
-        .catch((error) => {
-          console.log(error.code);
-          console.log(error.message);
+        .catch(error => {
+          console.log("there was a problem authenticating user: ", error);
         });
+
+      dispatch("fetchCurrentUser");
     },
     async fetchCurrentUser({ commit }) {
-      await firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          commit("SET_USER", user);
+      await firebase.auth().onAuthStateChanged(firebaseUser => {
+        if (firebaseUser) {
+          commit("SET_USER", firebaseUser);
         } else {
-          console.log("no dice, signed out");
+          console.log("not logged in");
         }
       });
     },
+    async fetchFavoriteBreweryIds({ state, dispatch }) {
+      if (state.user.uid != "") {
+        let breweryIds = await firebase
+          .firestore()
+          .collection("userid")
+          .doc(state.user.uid)
+          .get()
+          .then(doc => doc.data().favorites);
+
+        dispatch("getBreweriesById", breweryIds);
+      }
+    }
   },
-  modules: {},
+  modules: {}
 });

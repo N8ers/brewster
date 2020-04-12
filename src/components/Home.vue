@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-    <div v-if="loggedIn">
+    <div v-if="user.username">
       <h2>Welcome back, {{ user.username }}</h2>
       <br />
       <hr />
@@ -26,14 +26,10 @@ export default {
   name: "Home",
   props: {},
   computed: {
-    ...mapState(["loggedIn", "user"])
+    ...mapState(["user"])
   },
   methods: {
     ...mapActions(["fetchCurrentUser"])
-  },
-  created() {
-    console.log("created");
-    this.fetchCurrentUser();
   }
 };
 </script>

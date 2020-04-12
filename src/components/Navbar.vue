@@ -27,7 +27,9 @@ export default {
   methods: {
     logout: function() {
       this.$store.dispatch("logout").then(() => {
-        this.$router.push({ name: "home" });
+        if (this.$router.currentRoute.name !== "home") {
+          this.$router.push({ name: "home" });
+        }
       });
     }
   },
