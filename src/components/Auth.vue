@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
@@ -32,11 +34,13 @@ export default {
     };
   },
   methods: {
+    ...mapActions("auth", ["login"]),
     createAccount: function() {
       this.$router.push({ name: "createAccount" });
     },
     login: function() {
-      this.$store.dispatch("login", this.user).then(() => {
+      this.$store.dispatch("auth/login", this.user, { root: true }).then(() => {
+        // this.$store.dispatch("auth/fetchCurrentUser");
         this.$router.push({ name: "home" });
       });
     }

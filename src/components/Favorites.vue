@@ -1,7 +1,7 @@
 <template>
   <div class="favorites-container">
     <h1>This is a list of breweries that you've favorited!</h1>
-    <BreweriesTable :breweries="favoriteBreweries" />
+    <BreweriesTable :breweries="firebase_db.favoriteBreweries" />
   </div>
 </template>
 
@@ -14,10 +14,10 @@ export default {
     BreweriesTable
   },
   computed: {
-    ...mapState(["user", "favoriteBreweries"])
+    ...mapState(["firebase_db"])
   },
   methods: {
-    ...mapActions(["fetchFavoriteBreweryIds"])
+    ...mapActions("firebase_db", ["fetchFavoriteBreweryIds"])
   },
   mounted() {
     this.fetchFavoriteBreweryIds();

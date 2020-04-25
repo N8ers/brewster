@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
-    <div v-if="user.username">
-      <h2>Welcome back, {{ user.username }}</h2>
+    <div v-if="auth.user.username">
+      <h2>Welcome back, {{ auth.user.username }}</h2>
       <br />
       <hr />
     </div>
@@ -21,16 +21,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "Home",
   props: {},
   computed: {
-    ...mapState(["user"])
+    ...mapState(["auth"])
   },
-  methods: {
-    ...mapActions(["fetchCurrentUser"])
-  }
+  methods: {}
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="results">
-    <v-progress-circular v-if="isLoading" indeterminate color="primary"></v-progress-circular>
+    <v-progress-circular indeterminate color="primary"></v-progress-circular>
     <div>
       <h4>BREWERIES</h4>
       <br />
@@ -43,8 +43,7 @@
 import { mapState } from "vuex";
 export default {
   props: {
-    breweries: Array,
-    isLoading: Boolean
+    breweries: Array
   },
   methods: {
     goToBrewery: function(id) {
@@ -64,7 +63,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["noResults"])
+    ...mapState(["noResults", "breweries_db"])
   }
 };
 </script>
