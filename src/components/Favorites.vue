@@ -1,7 +1,7 @@
 <template>
   <div class="favorites-container">
     <h1>This is a list of breweries that you've favorited!</h1>
-    <BreweriesTable :breweries="firebase_db.favoriteBreweries" />
+    <BreweriesTable :breweries="firebase_db.favoriteBreweries" :hasDeleteOption="true" />
   </div>
 </template>
 

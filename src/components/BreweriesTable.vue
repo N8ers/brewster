@@ -11,18 +11,29 @@
             <th class="text-left">Address</th>
             <th class="text-left">State</th>
             <th class="text-left">Website</th>
+            <th class="text-left" v-if="hasDeleteOption">Unfavorite</th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="brewery in breweries"
-            :key="brewery.id"
-            @click="goToBrewery(brewery.id)"
-            v-bind:style="{ cursor: 'pointer' }"
-          >
-            <td class="text-left">{{ brewery.name }}</td>
-            <td class="text-left">{{ brewery.street ? brewery.street : "address unavailable" }}</td>
-            <td class="text-left">{{ brewery.state }}</td>
+          <tr v-for="brewery in breweries" :key="brewery.id">
+            <td
+              @click="goToBrewery(brewery.id)"
+              v-bind:style="{ cursor: 'pointer' }"
+              class="text-left"
+            >{{ brewery.name }}</td>
+
+            <td
+              @click="goToBrewery(brewery.id)"
+              v-bind:style="{ cursor: 'pointer' }"
+              class="text-left"
+            >{{ brewery.street ? brewery.street : "address unavailable" }}</td>
+
+            <td
+              @click="goToBrewery(brewery.id)"
+              v-bind:style="{ cursor: 'pointer' }"
+              class="text-left"
+            >{{ brewery.state }}</td>
+
             <td class="text-left">
               <a :href="brewery.website_url" target="_blank">
                 {{
@@ -32,6 +43,14 @@
                 }}
               </a>
             </td>
+
+            <td
+              v-if="hasDeleteOption"
+              v-bind:style="{ cursor: 'pointer' }"
+              @click="removeFavoritedBrewery(brewery)"
+            >
+              <v-icon left>mdi-delete</v-icon>
+            </td>
           </tr>
         </tbody>
       </v-simple-table>
@@ -40,14 +59,27 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+
 export default {
   props: {
-    breweries: Array
+    breweries: Array,
+    hasDeleteOption: {
+      type: Boolean,
+      default: false,
+      required: true
+    }
   },
   methods: {
+    ...mapActions("firebase_db", [
+      "deleteFavoriteBrewery",
+      "fetchFavoriteBreweryIds"
+    ]),
     goToBrewery: function(id) {
       this.$router.push({ name: "brewerydetails", params: { breweryid: id } });
+    },
+    removeFavoritedBrewery(brewery) {
+      this.deleteFavoriteBrewery(brewery.id);
     },
     formatURL: function(url) {
       let shortURL = "";
@@ -64,6 +96,9 @@ export default {
   },
   computed: {
     ...mapState(["noResults", "breweries_db"])
+  },
+  created: function() {
+    this.fetchFavoriteBreweryIds;
   }
 };
 </script>

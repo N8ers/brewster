@@ -34,6 +34,38 @@ const actions = {
       });
     }
   },
+  async deleteFavoriteBrewery({ rootState, dispatch }, breweryIdToDelete) {
+    let oldFavorites = this.state.firebase_db.favoriteBreweryIds;
+
+    let newFavorites = oldFavorites.filter((breweryId) => {
+      return breweryId != breweryIdToDelete;
+    });
+
+    await firebase
+      .firestore()
+      .collection("userid")
+      .doc(rootState.auth.user.uid)
+      .update({ favorites: newFavorites })
+      .catch((err) => console.log("Error: ", err));
+
+    dispatch("fetchFavoriteBreweryIds");
+  },
+  async addBreweryToFavorites({ rootState, dispatch }, newFavoriteBreweryId) {
+    let favorites = this.state.firebase_db.favoriteBreweryIds;
+    favorites.push(newFavoriteBreweryId);
+
+    await firebase
+      .firestore()
+      .collection("userid")
+      .doc(rootState.auth.user.uid)
+      .update({ favorites: favorites })
+      .catch((err) => console.log("Error: ", err));
+
+    dispatch("fetchFavoriteBreweryIds");
+  },
+  async isFavoritedBrewery(context, breweryId) {
+    return this.state.firebase_db.favoriteBreweryIds.includes(breweryId);
+  },
 };
 
 export default {

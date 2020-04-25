@@ -27,7 +27,7 @@
       </div>
     </form>
     <br />
-    <BreweriesTable v-if="showTable" :breweries="cityBreweries" />
+    <BreweriesTable v-if="showTable" :breweries="cityBreweries" :hasDeleteOption="false" />
   </div>
 </template>
 

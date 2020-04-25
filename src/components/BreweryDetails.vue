@@ -25,11 +25,7 @@
         <tr>
           <td>website:</td>
           <td>
-            <a :href="brewery.website_url" target="_blank">
-              {{
-              brewery.website_url
-              }}
-            </a>
+            <a :href="brewery.website_url" target="_blank">{{ brewery.website_url }}</a>
           </td>
         </tr>
         <tr>
@@ -41,19 +37,43 @@
     <v-btn :to="{ name: 'find' }" class="ma-2 white--text" color="#f6d465">
       <v-icon dark left>mdi-arrow-left</v-icon>Back
     </v-btn>
+    <v-btn v-if="isFavorited" @click="unfavoriteBrewery">
+      <v-icon left>mdi-star</v-icon>Unfavorite
+    </v-btn>
+    <v-btn v-if="!isFavorited" @click="favoriteBrewery">
+      <v-icon left>mdi-star</v-icon>Favorite
+    </v-btn>
   </v-card>
 </template>
 
 <script>
 import axios from "axios";
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
       encodedURI: "",
-      brewery: {}
+      brewery: {},
+      isFavorited: null
     };
   },
   methods: {
+    ...mapActions("firebase_db", [
+      "addBreweryToFavorites",
+      "isFavoritedBrewery",
+      "deleteFavoriteBrewery"
+    ]),
+    favoriteBrewery() {
+      this.addBreweryToFavorites(this.brewery.id).then(() => {
+        this.isFavorited = true;
+      });
+    },
+    unfavoriteBrewery() {
+      this.deleteFavoriteBrewery(this.brewery.id).then(() => {
+        this.isFavorited = false;
+      });
+    },
     formatPhone: function(number) {
       if (number && number.length == 10) {
         let areaCode = number.substr(0, 3);
@@ -64,12 +84,10 @@ export default {
       return number;
     },
     uriEncoder: function() {
-      // console.log(this.brewery.street);
       let address = `${this.brewery.street} ${this.brewery.city} ${this.brewery.state} ${this.brewery.zip}`;
       this.encodedURI = encodeURI(
         `https://www.google.com/maps/search/?api=1&query=${address}`
       );
-      // console.log(this.encodedURI);
     }
   },
   created() {
@@ -80,7 +98,6 @@ export default {
           `https://api.openbrewerydb.org/breweries/${this.$route.params.breweryid}`
         )
         .then(response => {
-          // console.log("success: ", response.data);
           this.brewery = response.data;
         })
         .then(() => this.uriEncoder())
@@ -90,6 +107,11 @@ export default {
     } else {
       alert("no brewery found");
     }
+  },
+  mounted() {
+    this.isFavoritedBrewery(this.$route.params.breweryid).then(
+      response => (this.isFavorited = response)
+    );
   }
 };
 </script>
