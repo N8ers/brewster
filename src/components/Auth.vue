@@ -12,11 +12,17 @@
         label="password"
         type="password"
       >{{ user.password }}</v-text-field>
+      <v-progress-circular v-if="isLoading" indeterminate color="primary"></v-progress-circular>
+      <span v-if="signinFailed">
+        <p>There was a problem with your username/password</p>
+        <p>Try again or sign up below</p>
+        <br />
+      </span>
       <v-btn @click.prevent="login" type="submit" color="#f6d465" class="white--text">Log in</v-btn>
       <br />
       <br />
       <p>wanna join in the fun?</p>
-      <v-btn @click="createAccount">Sign up</v-btn>
+      <v-btn small @click="createAccount">Sign up</v-btn>
     </form>
   </div>
 </template>
@@ -30,7 +36,9 @@ export default {
       user: {
         email: "",
         password: ""
-      }
+      },
+      isLoading: false,
+      signinFailed: false
     };
   },
   methods: {
@@ -39,10 +47,16 @@ export default {
       this.$router.push({ name: "createAccount" });
     },
     login: function() {
-      this.$store.dispatch("auth/login", this.user, { root: true }).then(() => {
-        // this.$store.dispatch("auth/fetchCurrentUser");
-        this.$router.push({ name: "home" });
-      });
+      this.isLoading = true;
+      this.$store
+        .dispatch("auth/login", this.user, { root: true })
+        .then(() => {
+          this.$router.push({ name: "home" });
+        })
+        .catch(() => {
+          this.signinFailed = true;
+        });
+      this.isLoading = false;
     }
   }
 };

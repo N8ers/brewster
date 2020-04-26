@@ -6,8 +6,8 @@ const state = {
   user: {
     email: "",
     username: "",
-    uid: "",
-  },
+    uid: ""
+  }
 };
 
 const mutations = {
@@ -22,7 +22,7 @@ const mutations = {
     console.log("LOG_OUT fired");
     state.loggedIn = false;
     state.user = {};
-  },
+  }
 };
 
 const actions = {
@@ -32,17 +32,17 @@ const actions = {
       .auth()
       .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
-        let signedInResponse = firebase
+        firebase
           .auth()
-          .signInWithEmailAndPassword(user.email, user.password);
-        return signedInResponse;
+          .signInWithEmailAndPassword(user.email, user.password)
+          .then(response => response);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log("there was a problem authenticating user: ", error);
       });
   },
   async fetchCurrentUser({ commit }) {
-    await firebase.auth().onAuthStateChanged((firebaseUser) => {
+    await firebase.auth().onAuthStateChanged(firebaseUser => {
       if (firebaseUser) {
         commit("SET_USER", firebaseUser);
       } else {
@@ -51,10 +51,11 @@ const actions = {
     });
   },
   async logout({ commit }) {
+    console.log("fired");
     firebase
       .auth()
       .signOut()
-      .catch((error) => console.log("error: ", error));
+      .catch(error => console.log("error: ", error));
     commit("LOG_OUT");
   },
   async signup(context, user) {
@@ -63,12 +64,21 @@ const actions = {
       .createUserWithEmailAndPassword(user.email, user.password);
 
     await firebase.auth().currentUser.updateProfile({ displayName: user.name });
-  },
+
+    // console.log("signinStatus: ", signinStatus);
+    // console.log("makeUsername: ", makeUsername);
+
+    // if (signinStatus && makeUsername) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+  }
 };
 
 export default {
   namespaced: true,
   state,
   actions,
-  mutations,
+  mutations
 };

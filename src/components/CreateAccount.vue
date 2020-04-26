@@ -1,8 +1,16 @@
 <template>
   <div>
     <form>
-      <v-text-field v-model="user.name" required label="username">{{ user.name }}</v-text-field>
-      <v-text-field v-model="user.email" required label="email">{{ user.email }}</v-text-field>
+      <v-text-field v-model="user.name" required label="username">
+        {{
+        user.name
+        }}
+      </v-text-field>
+      <v-text-field v-model="user.email" required label="email">
+        {{
+        user.email
+        }}
+      </v-text-field>
       <v-text-field
         v-model="user.password"
         required
@@ -14,26 +22,29 @@
       <br />
       <br />
       <p>already have an account?</p>
-      <v-btn @click="loginPage">Login in</v-btn>
+      <v-btn small @click="loginPage">Login</v-btn>
     </form>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return { user: { name: "", email: "", password: "" } };
   },
   methods: {
+    ...mapActions("auth", ["signup"]),
     loginPage: function() {
       this.$router.push({ name: "auth" });
     },
     signup: function() {
-      console.log("CreateAccount user: ", this.user);
-      this.$store.dispatch("signup", this.user);
-      // .then(() => {
-      //    this.$router.push({ name: "home" });
-      // });
+      this.$store
+        .dispatch("auth/signup", this.user, { root: true })
+        .then(() => {
+          this.$router.push({ name: "home" });
+        });
     }
   }
 };
