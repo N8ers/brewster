@@ -28,7 +28,8 @@ export default {
 
 <style scoped>
 .body {
-  background-color: #f6d465;
+  /* background-color: #f6d465; */
+  background-color: pink;
   height: 100vh;
 }
 </style>
