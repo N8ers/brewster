@@ -3,7 +3,7 @@ import "firebase/firebase-firestore";
 
 const state = {
   favoriteBreweryIds: [],
-  favoriteBreweries: [],
+  favoriteBreweries: []
 };
 
 const mutations = {
@@ -12,7 +12,7 @@ const mutations = {
   },
   SET_FAVORITE_BREWERIES_IDS(state, breweryIds) {
     state.favoriteBreweryIds = breweryIds;
-  },
+  }
 };
 
 const actions = {
@@ -23,13 +23,13 @@ const actions = {
         .collection("userid")
         .doc(rootState.auth.user.uid)
         .get()
-        .then((doc) => doc.data().favorites);
+        .then(doc => doc.data().favorites);
 
       commit("SET_FAVORITE_BREWERIES_IDS", breweryIds);
 
       dispatch("breweries_db/getBreweriesById", breweryIds, {
-        root: true,
-      }).then((breweriesData) => {
+        root: true
+      }).then(breweriesData => {
         commit("SET_FAVORITE_BREWERIES", breweriesData);
       });
     }
@@ -37,7 +37,7 @@ const actions = {
   async deleteFavoriteBrewery({ rootState, dispatch }, breweryIdToDelete) {
     let oldFavorites = this.state.firebase_db.favoriteBreweryIds;
 
-    let newFavorites = oldFavorites.filter((breweryId) => {
+    let newFavorites = oldFavorites.filter(breweryId => {
       return breweryId != breweryIdToDelete;
     });
 
@@ -45,8 +45,8 @@ const actions = {
       .firestore()
       .collection("userid")
       .doc(rootState.auth.user.uid)
-      .update({ favorites: newFavorites })
-      .catch((err) => console.log("Error: ", err));
+      .update({ favorites: newFavorites });
+    // .catch((err) => console.log("Error: ", err));
 
     dispatch("fetchFavoriteBreweryIds");
   },
@@ -58,19 +58,19 @@ const actions = {
       .firestore()
       .collection("userid")
       .doc(rootState.auth.user.uid)
-      .update({ favorites: favorites })
-      .catch((err) => console.log("Error: ", err));
+      .update({ favorites: favorites });
+    // .catch(err => console.log("Error: ", err));
 
     dispatch("fetchFavoriteBreweryIds");
   },
   async isFavoritedBrewery(context, breweryId) {
     return this.state.firebase_db.favoriteBreweryIds.includes(breweryId);
-  },
+  }
 };
 
 export default {
   namespaced: true,
   state,
   actions,
-  mutations,
+  mutations
 };

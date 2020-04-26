@@ -16,7 +16,7 @@ var firebaseConfig = {
   storageBucket: "brewster-c62ae.appspot.com",
   messagingSenderId: "1008545313989",
   appId: "1:1008545313989:web:ab5c9f9b9839d19df56cac",
-  measurementId: "G-54PNGG36Q8",
+  measurementId: "G-54PNGG36Q8"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -26,8 +26,8 @@ new Vue({
   store,
   vuetify,
   created() {
-    console.log("main.js CREATED!");
+    // console.log("main.js CREATED!");
     this.$store.dispatch("auth/fetchCurrentUser");
   },
-  render: (h) => h(App),
+  render: h => h(App)
 }).$mount("#app");

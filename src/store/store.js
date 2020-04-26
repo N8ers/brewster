@@ -11,7 +11,7 @@ export default new Vuex.Store({
   modules: {
     breweries_db,
     firebase_db,
-    auth,
+    auth
   },
   state: {
     isLoading: false,
@@ -21,17 +21,17 @@ export default new Vuex.Store({
       "kalamazoo",
       "indianapolis",
       "boulder",
-      "seattle",
-    ],
+      "seattle"
+    ]
   },
   mutations: {
     IS_LOADING(state, setTo) {
-      console.log("IS_LOADING fired");
+      // console.log("IS_LOADING fired");
       state.isLoading = setTo;
     },
     SET_NO_RESULTS(state, setTo) {
-      console.log("SET_NO_RESULTS fired");
+      // console.log("SET_NO_RESULTS fired");
       state.noResults = setTo;
-    },
-  },
+    }
+  }
 });

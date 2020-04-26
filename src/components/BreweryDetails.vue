@@ -25,7 +25,11 @@
         <tr>
           <td>website:</td>
           <td>
-            <a :href="brewery.website_url" target="_blank">{{ brewery.website_url }}</a>
+            <a :href="brewery.website_url" target="_blank">
+              {{
+              brewery.website_url
+              }}
+            </a>
           </td>
         </tr>
         <tr>
@@ -100,10 +104,10 @@ export default {
         .then(response => {
           this.brewery = response.data;
         })
-        .then(() => this.uriEncoder())
-        .catch(error => {
-          console.log("no dice... ", error);
-        });
+        .then(() => this.uriEncoder());
+      // .catch(error => {
+      // console.log("no dice... ", error);
+      // });
     } else {
       alert("no brewery found");
     }
