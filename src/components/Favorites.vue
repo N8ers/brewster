@@ -1,7 +1,11 @@
 <template>
   <div class="favorites-container">
     <h1>This is a list of breweries that you've favorited!</h1>
-    <BreweriesTable :breweries="firebase_db.favoriteBreweries" :hasDeleteOption="true" />
+    <BreweriesTable
+      :isLoading="isLoading"
+      :breweries="firebase_db.favoriteBreweries"
+      :hasDeleteOption="true"
+    />
   </div>
 </template>
 
@@ -10,6 +14,11 @@ import { mapState, mapActions } from "vuex";
 
 import BreweriesTable from "./BreweriesTable";
 export default {
+  data() {
+    return {
+      isLoading: false
+    };
+  },
   components: {
     BreweriesTable
   },
@@ -20,7 +29,9 @@ export default {
     ...mapActions("firebase_db", ["fetchFavoriteBreweryIds"])
   },
   mounted() {
+    this.isLoading = true;
     this.fetchFavoriteBreweryIds();
+    this.isLoading = false;
   }
 };
 </script>

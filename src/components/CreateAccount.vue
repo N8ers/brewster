@@ -17,6 +17,7 @@
         label="password"
         type="password"
       >{{ user.password }}</v-text-field>
+      <v-progress-circular v-if="isLoading" indeterminate color="primary"></v-progress-circular>
       <v-btn @click.prevent="signup" type="submit" color="#f6d465" class="white--text">Sign Up!</v-btn>
       <br />
       <br />
@@ -32,7 +33,10 @@ import { mapActions } from "vuex";
 
 export default {
   data() {
-    return { user: { name: "", email: "", password: "" } };
+    return {
+      user: { name: "", email: "", password: "" },
+      isLoading: false
+    };
   },
   methods: {
     ...mapActions("auth", ["signup"]),
@@ -40,11 +44,13 @@ export default {
       this.$router.push({ name: "auth" });
     },
     signup: function() {
+      this.isLoading = true;
       this.$store
         .dispatch("auth/signup", this.user, { root: true })
         .then(() => {
           this.$router.push({ name: "home" });
         });
+      this.isLoading = false;
     }
   }
 };

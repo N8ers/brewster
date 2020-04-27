@@ -1,9 +1,13 @@
 <template>
   <div class="results">
-    <v-progress-circular indeterminate color="primary"></v-progress-circular>
     <div>
       <h4>BREWERIES</h4>
       <br />
+      <v-progress-circular
+        v-if="isLoading"
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
       <v-simple-table fixed-header height="40vh">
         <thead>
           <tr>
@@ -20,26 +24,32 @@
               @click="goToBrewery(brewery.id)"
               v-bind:style="{ cursor: 'pointer' }"
               class="text-left"
-            >{{ brewery.name }}</td>
+            >
+              {{ brewery.name }}
+            </td>
 
             <td
               @click="goToBrewery(brewery.id)"
               v-bind:style="{ cursor: 'pointer' }"
               class="text-left"
-            >{{ brewery.street ? brewery.street : "address unavailable" }}</td>
+            >
+              {{ brewery.street ? brewery.street : "address unavailable" }}
+            </td>
 
             <td
               @click="goToBrewery(brewery.id)"
               v-bind:style="{ cursor: 'pointer' }"
               class="text-left"
-            >{{ brewery.state }}</td>
+            >
+              {{ brewery.state }}
+            </td>
 
             <td class="text-left">
               <a :href="brewery.website_url" target="_blank">
                 {{
-                brewery.website_url
-                ? formatURL(brewery.website_url)
-                : "no website available"
+                  brewery.website_url
+                    ? formatURL(brewery.website_url)
+                    : "no website available"
                 }}
               </a>
             </td>
@@ -68,6 +78,11 @@ export default {
       type: Boolean,
       default: false,
       required: true
+    },
+    isLoading: {
+      type: Boolean,
+      default: false,
+      required: false
     }
   },
   methods: {
