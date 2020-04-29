@@ -65,6 +65,17 @@ const actions = {
   },
   async isFavoritedBrewery(context, breweryId) {
     return this.state.firebase_db.favoriteBreweryIds.includes(breweryId);
+  },
+  async alocateDbResourcesForNewUser(context, uid) {
+    console.log("uid: ", uid);
+
+    await firebase
+      .firestore()
+      .collection("userid")
+      .doc(uid)
+      .set({
+        favorites: []
+      });
   }
 };
 

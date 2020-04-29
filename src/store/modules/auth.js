@@ -56,21 +56,19 @@ const actions = {
     // .catch(error => console.log("error: ", error));
     commit("LOG_OUT");
   },
-  async signup(context, user) {
+  async signup({ dispatch }, user) {
+    // create user
     await firebase
       .auth()
       .createUserWithEmailAndPassword(user.email, user.password);
 
+    // add display name to user
     await firebase.auth().currentUser.updateProfile({ displayName: user.name });
 
-    // console.log("signinStatus: ", signinStatus);
-    // console.log("makeUsername: ", makeUsername);
-
-    // if (signinStatus && makeUsername) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
+    // initialize database w/ uid, and empty array
+    dispatch("firebase_db/alocateDbResourcesForNewUser", state.user.uid, {
+      root: true
+    });
   }
 };
 

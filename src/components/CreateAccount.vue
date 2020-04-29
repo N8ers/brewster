@@ -2,23 +2,30 @@
   <div>
     <form>
       <v-text-field v-model="user.name" required label="username">
-        {{
-        user.name
-        }}
+        {{ user.name }}
       </v-text-field>
       <v-text-field v-model="user.email" required label="email">
-        {{
-        user.email
-        }}
+        {{ user.email }}
       </v-text-field>
       <v-text-field
         v-model="user.password"
         required
         label="password"
         type="password"
-      >{{ user.password }}</v-text-field>
-      <v-progress-circular v-if="isLoading" indeterminate color="primary"></v-progress-circular>
-      <v-btn @click.prevent="signup" type="submit" color="#f6d465" class="white--text">Sign Up!</v-btn>
+        >{{ user.password }}</v-text-field
+      >
+      <v-progress-circular
+        v-if="isLoading"
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
+      <v-btn
+        @click.prevent="signup"
+        type="submit"
+        color="#f6d465"
+        class="white--text"
+        >Sign Up!</v-btn
+      >
       <br />
       <br />
       <br />
