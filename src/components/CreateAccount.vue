@@ -63,11 +63,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 form {
   background-color: white;
   color: #f6d465;
   width: 60%;
+  max-width: 400px;
   margin: 0 auto;
   top: 20px;
   padding: 30px;

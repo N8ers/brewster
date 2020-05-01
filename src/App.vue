@@ -27,8 +27,10 @@ export default {
 </script>
 
 <style scoped>
-.body {
+body,
+html,
+#app {
+  min-height: 100%;
   background-color: #f6d465;
-  height: 100vh;
 }
 </style>

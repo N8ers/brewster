@@ -8,7 +8,7 @@
         indeterminate
         color="primary"
       ></v-progress-circular>
-      <v-simple-table fixed-header height="40vh">
+      <v-simple-table fixed-header>
         <thead>
           <tr>
             <th class="text-left">Brewery</th>
@@ -123,7 +123,7 @@ export default {
   color: red;
 }
 .results {
-  margin: 0 auto;
-  width: 50%;
+  margin: 0px auto 40px auto;
+  width: 60%;
 }
 </style>

@@ -15,7 +15,9 @@
     <hr />
     <br />
     <h4>Background Color: #f6d465</h4>
-    <h4>To login, navigate to 'LOG IN' button and click "FAKE 'LOG IN'" button</h4>
+    <h4>
+      To login, navigate to 'LOG IN' button and click "FAKE 'LOG IN'" button
+    </h4>
     <h5>there is a login sanity checker at the center of the nav bar</h5>
   </div>
 </template>
@@ -32,7 +34,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .home-container {
   background-color: white;
