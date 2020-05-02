@@ -5,11 +5,11 @@ import store from "./store/store";
 import vuetify from "./plugins/vuetify";
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import VueAnalytics from "vue-analytics";
+// import VueAnalytics from "vue-analytics";
 
-Vue.use(VueAnalytics, {
-  id: "G-54PNGG36Q8"
-});
+// Vue.use(VueAnalytics, {
+//   id: "G-54PNGG36Q8"
+// });
 
 Vue.config.productionTip = false;
 
@@ -25,6 +25,7 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
 new Vue({
   router,
@@ -32,6 +33,7 @@ new Vue({
   vuetify,
   created() {
     this.$store.dispatch("auth/fetchCurrentUser");
+    firebase.analytics().logEvent("someone_loaded_page");
   },
   render: h => h(App)
 }).$mount("#app");
