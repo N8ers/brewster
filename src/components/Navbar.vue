@@ -1,8 +1,5 @@
 <template>
   <v-app-bar app>
-    <router-link :to="{ name: 'home' }">
-      <img class="icon" src="../assets/icon.png" />
-    </router-link>
     <router-link class="icon" :to="{ name: 'home' }">
       <v-toolbar-title to="/" class="brand">Brewster</v-toolbar-title>
     </router-link>
@@ -62,6 +59,7 @@ export default {
   color: #f6d465;
   margin-top: -6px;
   margin-left: 10px;
+  font-family: "Lobster", cursive;
   font-size: 2.5em;
 }
 a {

@@ -29,6 +29,9 @@ body,
 html,
 #app {
   min-height: 100%;
-  background-color: #f6d465;
+  background-color: #ffd369;
+}
+.footer {
+  bottom: 10px;
 }
 </style>

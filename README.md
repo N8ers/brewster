@@ -1,7 +1,7 @@
 # [Brewster](https://brewster-c62ae.firebaseapp.com/)
 
 ## Project Description:
-[Brewster](https://brewster-c62ae.firebaseapp.com/) is a web app that lets you find breweries based on city. So you can find breweries hidden where you live or explore new cities vacation/travel. Create an account and add breweries to your favorites list!
+[Brewster](https://brewster-c62ae.firebaseapp.com/) is a web app that lets you find breweries based on city. Using the latest in fermenting algorithms and map analytics Beerski can help you find breweries hidden where you live or explore new beer when traveling or on vacation. Create an account and add breweries to your favorites list!
 Find beer, where ever life takes you!
 
 

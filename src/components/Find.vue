@@ -8,7 +8,8 @@
         @click.prevent="findBreweries()"
         color="#f6d465"
         class="white--text ma-2"
-      >find</v-btn>
+        >find</v-btn
+      >
       <br />
       <br />
       <hr />
@@ -22,7 +23,8 @@
             @click.prevent="findBreweries(city)"
             color="#f6d465"
             class="white--text ma-2"
-          >{{ city }}</v-btn>
+            >{{ city }}</v-btn
+          >
         </span>
       </div>
     </form>
@@ -33,6 +35,7 @@
       :breweries="cityBreweries"
       :hasDeleteOption="false"
     />
+    <br />
   </div>
 </template>
 

@@ -4,7 +4,6 @@
     <v-card-subtitle
       >what do they brew: {{ brewery.brewery_type }}</v-card-subtitle
     >
-
     <v-simple-table>
       <tbody>
         <tr>
@@ -14,14 +13,10 @@
         <tr>
           <td>address:</td>
           <td>
-            {{ brewery.street }} {{ brewery.city }}, {{ brewery.state }}
-            {{ brewery.postal_code }}
-          </td>
-        </tr>
-        <tr>
-          <td>endoded uri:</td>
-          <td>
-            <a :href="encodedURI" target="_blank">{{ brewery.street }}</a>
+            <a :href="encodedURI" target="_blank">
+              {{ brewery.street }} {{ brewery.city }}, {{ brewery.state }}
+              {{ brewery.postal_code }}
+            </a>
           </td>
         </tr>
         <tr>
@@ -52,7 +47,7 @@
 
 <script>
 import axios from "axios";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   data() {
@@ -69,6 +64,9 @@ export default {
       "deleteFavoriteBrewery"
     ]),
     favoriteBrewery() {
+      if (!this.auth.loggedIn) {
+        this.$router.push({ name: "createAccount" });
+      }
       this.addBreweryToFavorites(this.brewery.id).then(() => {
         this.isFavorited = true;
       });
@@ -93,6 +91,9 @@ export default {
         `https://www.google.com/maps/search/?api=1&query=${address}`
       );
     }
+  },
+  computed: {
+    ...mapState(["auth"])
   },
   created() {
     this.uriEncoder();
