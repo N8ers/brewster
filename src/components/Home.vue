@@ -12,6 +12,10 @@
       help you find a brewery just down the road or miles away. Buy local. Drink
       local.
     </p>
+    <p>
+      Go to 'find' to search breweries by city, or create an account to make a
+      brewery bucket list!
+    </p>
   </div>
 </template>
 

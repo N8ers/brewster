@@ -1,7 +1,7 @@
 <template>
   <div class="results">
     <div>
-      <h4>BREWERIES</h4>
+      <h4 v-if="!hasDeleteOption">BREWERIES</h4>
       <br />
       <v-progress-circular
         v-if="isLoading"
