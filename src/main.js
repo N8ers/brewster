@@ -31,7 +31,6 @@ new Vue({
   store,
   vuetify,
   created() {
-    // console.log("main.js CREATED!");
     this.$store.dispatch("auth/fetchCurrentUser");
   },
   render: h => h(App)

@@ -26,11 +26,9 @@ export default new Vuex.Store({
   },
   mutations: {
     IS_LOADING(state, setTo) {
-      // console.log("IS_LOADING fired");
       state.isLoading = setTo;
     },
     SET_NO_RESULTS(state, setTo) {
-      // console.log("SET_NO_RESULTS fired");
       state.noResults = setTo;
     }
   }

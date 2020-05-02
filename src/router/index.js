@@ -13,39 +13,39 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home,
+    component: Home
   },
   {
     path: "/find",
     name: "find",
-    component: Find,
+    component: Find
   },
   {
     path: "/auth",
     name: "auth",
-    component: Auth,
+    component: Auth
   },
   {
     path: "/createAccount",
     name: "createAccount",
-    component: CreateAccount,
+    component: CreateAccount
   },
   {
     path: "/favorites",
     name: "favorites",
-    component: Favorites,
+    component: Favorites
   },
   {
     path: "/brewery/:breweryid",
     name: "brewerydetails",
-    component: BreweryDetails,
-  },
+    component: BreweryDetails
+  }
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes,
+  routes
 });
 
 export default router;

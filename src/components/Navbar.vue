@@ -9,20 +9,30 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn :to="{ name: 'find' }" color="#f6d465" class="white--text ma-2">find</v-btn>
+    <v-btn :to="{ name: 'find' }" color="#f6d465" class="white--text ma-2"
+      >find</v-btn
+    >
     <v-btn
       v-if="auth.loggedIn"
       :to="{ name: 'favorites' }"
       color="#f6d465"
       class="white--text ma-2"
-    >favorites</v-btn>
+      >favorites</v-btn
+    >
     <v-btn
       v-if="!auth.loggedIn"
       :to="{ name: 'auth' }"
       color="#f6d465"
       class="white--text ma-2"
-    >log in</v-btn>
-    <v-btn v-if="auth.loggedIn" @click="logout" color="#f6d465" class="white--text ma-2">log out</v-btn>
+      >log in</v-btn
+    >
+    <v-btn
+      v-if="auth.loggedIn"
+      @click="logout"
+      color="#f6d465"
+      class="white--text ma-2"
+      >log out</v-btn
+    >
   </v-app-bar>
 </template>
 
@@ -56,9 +66,5 @@ export default {
 }
 a {
   text-decoration: none;
-}
-.router-link-exact-active {
-  /* color: pink; */
-  /* background-color: teal; */
 }
 </style>

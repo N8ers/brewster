@@ -46,7 +46,6 @@ const actions = {
       .collection("userid")
       .doc(rootState.auth.user.uid)
       .update({ favorites: newFavorites });
-    // .catch((err) => console.log("Error: ", err));
 
     dispatch("fetchFavoriteBreweryIds");
   },
@@ -59,7 +58,6 @@ const actions = {
       .collection("userid")
       .doc(rootState.auth.user.uid)
       .update({ favorites: favorites });
-    // .catch(err => console.log("Error: ", err));
 
     dispatch("fetchFavoriteBreweryIds");
   },

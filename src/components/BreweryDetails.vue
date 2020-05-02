@@ -1,7 +1,9 @@
 <template>
   <v-card max-width="450" class="mx-auto">
     <v-card-title>{{ brewery.name }}</v-card-title>
-    <v-card-subtitle>what do they brew: {{ brewery.brewery_type }}</v-card-subtitle>
+    <v-card-subtitle
+      >what do they brew: {{ brewery.brewery_type }}</v-card-subtitle
+    >
 
     <v-simple-table>
       <tbody>
@@ -26,9 +28,7 @@
           <td>website:</td>
           <td>
             <a :href="brewery.website_url" target="_blank">
-              {{
-              brewery.website_url
-              }}
+              {{ brewery.website_url }}
             </a>
           </td>
         </tr>
@@ -105,9 +105,6 @@ export default {
           this.brewery = response.data;
         })
         .then(() => this.uriEncoder());
-      // .catch(error => {
-      // console.log("no dice... ", error);
-      // });
     } else {
       alert("no brewery found");
     }
