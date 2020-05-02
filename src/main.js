@@ -5,11 +5,7 @@ import store from "./store/store";
 import vuetify from "./plugins/vuetify";
 import * as firebase from "firebase/app";
 import "firebase/auth";
-// import VueAnalytics from "vue-analytics";
-
-// Vue.use(VueAnalytics, {
-//   id: "G-54PNGG36Q8"
-// });
+import "firebase/firebase-analytics";
 
 Vue.config.productionTip = false;
 
