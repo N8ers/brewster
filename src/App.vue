@@ -29,7 +29,7 @@ body,
 html,
 #app {
   min-height: 100%;
-  background-color: #ffd369;
+  background-color: #FFBF00;
 }
 .footer {
   bottom: 10px;
