@@ -3,9 +3,9 @@
     <div id="app">
       <Navbar />
       <br />
-      <v-content class="body">
+      <v-main class="body">
         <router-view></router-view>
-      </v-content>
+      </v-main>
     </div>
   </v-app>
 </template>
